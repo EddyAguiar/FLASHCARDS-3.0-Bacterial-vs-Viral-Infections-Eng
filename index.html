@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards - Bacterial vs Viral Infections (EN)</title>
+    <style>
+        :root {
+            --bacterial: #D32F2F;
+            --viral: #1976D2;
+            --tests: #2E7D32;
+            --symptoms: #F57C00;
+            --practice: #6A1B9A;
+            --bg: #f5f7fa;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); padding: 20px; max-width: 1100px; margin: 0 auto; }
+        h1 { text-align:center; color:#2d3748; margin-bottom:18px; }
+        .categories { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:18px; }
+        .category-btn { padding:8px 14px; border-radius:20px; border:none; cursor:pointer; font-weight:600; }
+        .bacterial-btn { background:var(--bacterial); color:#fff; }
+        .viral-btn { background:var(--viral); color:#fff; }
+        .tests-btn { background:var(--tests); color:#fff; }
+        .symptoms-btn { background:var(--symptoms); color:#fff; }
+        .practice-btn { background:var(--practice); color:#fff; }
+        .all-btn { background:#2d3748; color:#fff; }
+        .flashcards-container { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; }
+        .flashcard { background:#fff; border-radius:12px; box-shadow:0 6px 12px rgba(0,0,0,0.08); padding:18px; cursor:pointer; transition:all 0.25s ease; border-left:6px solid; position:relative; overflow:hidden; }
+        .flashcard:hover { transform:translateY(-6px); box-shadow:0 14px 24px rgba(0,0,0,0.10); }
+        .bacterial { border-color:var(--bacterial); }
+        .viral { border-color:var(--viral); }
+        .tests { border-color:var(--tests); }
+        .symptoms { border-color:var(--symptoms); }
+        .practice { border-color:var(--practice); }
+        .flashcard-header { font-weight:700; font-size:1.1rem; margin-bottom:12px; display:flex; align-items:center; }
+        .emoji { margin-right:10px; font-size:1.4rem; }
+        .content { display:none; }
+        .content.active { display:block; animation:fadeIn 0.35s; }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+        .question { background:#f8fafc; padding:10px; border-radius:8px; margin-bottom:10px; color:#344; font-weight:600; }
+        .answer { background:#eef7ff; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--viral); }
+        .answer.bacterial { border-left-color:var(--bacterial); }
+        .explanation { background:#f0fff4; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--tests); }
+        .examples { background:#fff5e6; padding:10px; border-radius:8px; margin-bottom:10px; border-left:4px solid var(--symptoms); }
+        .practice-box { background:#f3e5f5; padding:10px; border-radius:8px; border-left:4px solid var(--practice); }
+        .show-answer { background:var(--practice); color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; margin-top:8px; }
+        .practice-answer { display:none; margin-top:8px; padding:8px; background:#f9fbff; border-radius:6px; }
+        .practice-answer.active { display:block; }
+        .hidden { display:none; }
+    </style>
+</head>
+<body>
+    <h1>📇 Flashcards — Bacterial vs Viral Infections</h1>
+
+    <div class="categories">
+        <button class="category-btn bacterial-btn" onclick="filterCards('bacterial')">Bacterial</button>
+        <button class="category-btn viral-btn" onclick="filterCards('viral')">Viral</button>
+        <button class="category-btn tests-btn" onclick="filterCards('tests')">Laboratory Tests</button>
+        <button class="category-btn symptoms-btn" onclick="filterCards('symptoms')">Symptoms</button>
+        <button class="category-btn practice-btn" onclick="filterCards('practice')">Practice</button>
+        <button class="category-btn all-btn" onclick="filterCards('all')">Show All</button>
+    </div>
+
+    <div class="flashcards-container">
+
+        <!-- GENERAL OVERVIEW -->
+        <div class="flashcard" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧾</span> Overview</div>
+            <div class="content">
+                <div class="question">What is the fundamental difference between bacteria and viruses?</div>
+                <div class="answer bacterial"><strong>Bacteria:</strong> Fully independent unicellular organisms that can reproduce on their own.</div>
+                <div class="answer viral"><strong>Viruses:</strong> Not cells; require a host cell to replicate.</div>
+                <div class="explanation">These differences determine treatment: antibiotics act on bacteria, not viruses.</div>
+            </div>
+        </div>
+
+        <!-- BACTERIAL INFECTIONS -->
+        <div class="flashcard bacterial" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🦠</span> Bacterial Infection — Characteristics</div>
+            <div class="content">
+                <div class="question">How does a typical bacterial infection present?</div>
+                <div class="answer bacterial">Sudden onset, localized symptoms (e.g., ear pain), high and persistent fever, thick yellow/green discharge.</div>
+                <div class="examples"><strong>Examples:</strong> bacterial otitis, strep throat, bacterial sinusitis.</div>
+            </div>
+        </div>
+
+        <!-- VIRAL INFECTIONS -->
+        <div class="flashcard viral" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🌡️</span> Viral Infection — Characteristics</div>
+            <div class="content">
+                <div class="question">How does a viral infection typically present?</div>
+                <div class="answer viral">Gradual onset, systemic symptoms (runny nose, cough, body aches), moderate fever, clear nasal discharge.</div>
+                <div class="examples"><strong>Examples:</strong> common cold, flu, viral pharyngitis.</div>
+            </div>
+        </div>
+
+        <!-- NATURAL METHODS -->
+        <div class="flashcard" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🌿</span> Natural Prevention & Support</div>
+            <div class="content">
+                <div class="question">How to naturally prevent infections?</div>
+                <div class="answer bacterial"><strong>For Bacterial:</strong> hygiene, proper wound care, probiotics, safe water.</div>
+                <div class="answer viral"><strong>For Viral:</strong> immune strengthening, vitamin D, good sleep, hydration, ventilation.</div>
+                <div class="explanation">Natural methods support immunity but do not replace medical care.</div>
+            </div>
+        </div>
+
+        <!-- LAB TESTS ADVANCED -->
+        <div class="flashcard tests" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🔬</span> Advanced Interpretation — Blood Panel</div>
+            <div class="content">
+                <div class="question">How to interpret combined patterns?</div>
+                <div class="examples"><strong>Example 1:</strong><br>• Neutrophils ↑<br>• Left shift ↑<br>• CRP ↑↑<br><strong>Suggests:</strong> significant acute bacterial infection.</div>
+
+                <div class="examples"><strong>Example 2:</strong><br>• Lymphocytes ↑<br>• Monocytes ↑<br>• Mild CRP elevation<br><strong>Suggests:</strong> viral infection in evolution or resolution.</div>
+            </div>
+        </div>
+
+        <!-- ADVANCED PCR INTERPRETATION -->
+        <div class="flashcard tests" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧬</span> Advanced PCR Interpretation</div>
+            <div class="content">
+                <div class="question">What do Ct values indicate?</div>
+                <div class="examples"><strong>Example:</strong><br>Ct 15 → high viral load (very infectious)<br>Ct 32 → low viral load (late-stage infection)</div>
+            </div>
+        </div>
+
+        <!-- PRACTICE ADVANCED -->
+        <div class="flashcard practice tests" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧠</span> Advanced Practice — Lab Interpretation</div>
+            <div class="content">
+                <div class="question">Solve the case</div>
+                <div class="practice-box">
+                    <div class="practice-item">
+                        <div>1. Neutrophils ↑↑ + Very high CRP + persistent fever → Most likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Severe acute bacterial infection.</strong></div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>2. Lymphocytes ↑ + Monocytes ↑ + long-duration symptoms → Likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Viral infection in prolonged phase.</strong></div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>3. Negative culture + Positive viral PCR → Interpretation?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Confirmed viral infection.</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function revealContent(card) {
+            const contents = card.querySelectorAll('.content');
+            for (let i=0;i<contents.length;i++) {
+                const c = contents[i];
+                if (!c.classList.contains('active')) {
+                    contents.forEach(x=>x.classList.remove('active'));
+                    c.classList.add('active');
+                    return;
+                }
+            }
+            contents.forEach(x=>x.classList.remove('active'));
+        }
+
+        function toggleAnswer(button) {
+            event.stopPropagation();
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('active');
+        }
+
+        function filterCards(category) {
+            const cards = document.querySelectorAll('.flashcard');
+            cards.forEach(card => {
+                if (category === 'all') { card.classList.remove('hidden'); return; }
+                if (card.classList.contains(category)) card.classList.remove('hidden'); else card.classList.add('hidden');
+            });
+        }
+    </script>
+        <!-- Natural Treatments — Bacterial -->
+        <div class="flashcard bacterial" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🍯</span> Natural Support — Bacterial Infections</div>
+            <div class="content">
+                <div class="question">Which natural methods can support recovery?</div>
+                <div class="answer bacterial">Raw garlic (allicin), honey with propolis, oregano oil, turmeric, ginger, warm compresses for localized infections.</div>
+                <div class="explanation">These support immunity and inflammation control but do NOT replace antibiotics when clinically required.</div>
+                <div class="examples"><strong>Examples:</strong> honey for throat pain; ginger for inflammation; warm compresses for abscess discomfort.</div>
+            </div>
+        </div>
+
+        <!-- Natural Treatments — Viral -->
+        <div class="flashcard viral" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🍋</span> Natural Support — Viral Infections</div>
+            <div class="content">
+                <div class="question">What helps the body fight viral infections?</div>
+                <div class="answer viral">Vitamin C, zinc, propolis, ginger tea, steam inhalation, proper hydration, lemon–mint tea, rest.</div>
+                <div class="explanation">The immune system clears viruses naturally; supportive methods reduce symptoms and speed recovery.</div>
+                <div class="examples"><strong>Examples:</strong> steam inhalation for congestion; vitamin C for immune function.</div>
+            </div>
+        </div>
+
+        <!-- Additional Practice — Bacterial -->
+        <div class="flashcard practice bacterial" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧩</span> Practice — Bacterial Diagnosis</div>
+            <div class="content">
+                <div class="question">Solve the scenarios</div>
+                <div class="practice-box">
+                    <div class="practice-item">
+                        <div>4. Persistent high fever, strong localized pain, thick green discharge → Most likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Bacterial infection.</strong> Typical localized and purulent presentation.</div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>5. Symptoms improve, then worsen significantly on day 8 → Most likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Secondary bacterial infection.</strong> Common after viral infections.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Practice — Viral -->
+        <div class="flashcard practice viral" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧩</span> Practice — Viral Diagnosis</div>
+            <div class="content">
+                <div class="question">Identify the pattern</div>
+                <div class="practice-box">
+                    <div class="practice-item">
+                        <div>6. Clear runny nose, body aches, mild fever → Most likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Viral infection.</strong></div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>7. Symptoms develop gradually over 2–3 days → Most likely?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Viral infection.</strong> Gradual onset is typical.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Practice — Lab Tests -->
+        <div class="flashcard practice tests" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🧬</span> Practice — Lab Tests</div>
+            <div class="content">
+                <div class="question">Interpret the results</div>
+                <div class="practice-box">
+                    <div class="practice-item">
+                        <div>8. High neutrophils → Suggests?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Bacterial infection.</strong></div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>9. High lymphocytes → Suggests?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Viral infection.</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Practice — Symptoms -->
+        <div class="flashcard practice symptoms" onclick="revealContent(this)">
+            <div class="flashcard-header"><span class="emoji">🩺</span> Practice — Symptom Classification</div>
+            <div class="content">
+                <div class="question">Classify each case</div>
+                <div class="practice-box">
+                    <div class="practice-item">
+                        <div>10. Low fever, clear nasal discharge, body aches → Type?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Viral infection.</strong></div>
+                    </div>
+
+                    <div class="practice-item" style="margin-top:8px;">
+                        <div>11. Very high fever + thick green mucus → Type?</div>
+                        <button class="show-answer" onclick="toggleAnswer(this)">Show Answer</button>
+                        <div class="practice-answer"><strong>Bacterial infection.</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
